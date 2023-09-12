@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "./build/Debug/Demo.elf",
+            "name": "Debug with OpenOCD",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "searchDir": [],
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "device": "CH32V307",
+            "svdFile": "D:/MounRiver/MounRiver_Studio/template/wizard/WCH/RISC-V/CH32V307/NoneOS/CH32V307xx.svd",
+            "toolchainPrefix": "D:/MounRiver/MounRiver_Studio/toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gdb.exe",
+            "configFiles": [
+                "D:/MounRiver/MounRiver_Studio/toolchain/OpenOCD/bin/wch-riscv.cfg"
+            ]
+        }
+    ]
+}

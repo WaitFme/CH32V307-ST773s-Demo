@@ -1,0 +1,64 @@
+{
+  "name": "Demo",
+  "type": "RISC-V",
+  "dependenceList": [],
+  "srcDirs": [
+    "Core",
+    "Drivers",
+    "Main",
+    "SDK"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": []
+  },
+  "outDir": "Build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {
+    "uid": "c8e11ed0fc4c9ea3625cf77fa5a69548"
+  },
+  "targets": {
+    "Debug": {
+      "excludeList": [],
+      "toolchain": "RISCV_GCC",
+      "compileConfig": {
+        "linkerScriptPath": "Core/Link.ld",
+        "options": "null"
+      },
+      "uploader": "Custom",
+      "uploadConfig": {
+        "bin": "${ExecutableName}.hex",
+        "commandLine": "download.cmd ${programFile}",
+        "eraseChipCommand": ""
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "null",
+            "cpuName": "null"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          "Core",
+          "Drivers",
+          "Main",
+          "SDK/inc"
+        ],
+        "libList": [],
+        "sourceDirList": [],
+        "defineList": []
+      }
+    }
+  },
+  "version": "3.3"
+}

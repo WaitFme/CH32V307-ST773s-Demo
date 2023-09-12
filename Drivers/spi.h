@@ -5,7 +5,7 @@
 
 #define SPI2_Port		GPIOB
 #define SPI2_PIN_CS		GPIO_Pin_12
-#define SPI2_PIN_SCLK	GPIO_Pin_13
+#define SPI2_PIN_SCLK	GPIO_Pin_13//
 #define SPI2_PIN_MISO	GPIO_Pin_14
 #define SPI2_PIN_MOSI	GPIO_Pin_15
 

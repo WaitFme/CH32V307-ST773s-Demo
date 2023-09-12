@@ -36,30 +36,30 @@
 #define LBBLUE				0X2B12
 
 #define LCD_Port			GPIOB
-#define LCD_DC_Pin			GPIO_Pin_0		// PA2
-#define LCD_CS_Pin			GPIO_Pin_1		// PA3
-#define LCD_RST_Pin			GPIO_Pin_12		// PA4
+#define LCD_DC_Pin			GPIO_Pin_0
+#define LCD_CS_Pin			GPIO_Pin_1
+#define LCD_RST_Pin			GPIO_Pin_12
 
 #define LCD_DC_WB(x)		GPIO_WriteBit(LCD_Port, LCD_DC_Pin, (BitAction)(x))
 #define LCD_CS_WB(x)		GPIO_WriteBit(LCD_Port, LCD_CS_Pin, (BitAction)(x))
 #define LCD_RST_WB(x)		GPIO_WriteBit(LCD_Port, LCD_RST_Pin, (BitAction)(x))
 
 void LCD_Init(void);
-void LCD_WriteData(u8 data);
-void LCD_WriteData_16Bit(u16 data);
-void LCD_WriteCMD(u8 cmd);
-void LCD_Address_Set(u16 x1,u16 y1,u16 x2,u16 y2);
-void LCD_Fill(u16 xsta,u16 ysta,u16 xend,u16 yend,u16 color);
-void LCD_Fill_DMA(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color);
+void LCD_WriteData(uint8_t data);
+void LCD_WriteData_16Bit(uint16_t data);
+void LCD_WriteCMD(uint8_t cmd);
+void LCD_Address_Set(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2);
+void LCD_Fill(uint16_t xsta,uint16_t ysta,uint16_t xend,uint16_t yend,uint16_t color);
+void LCD_Fill_DMA(uint16_t xsta, uint16_t ysta, uint16_t xend, uint16_t yend, uint16_t color);
 void LCD_Clear(uint16_t color);
-void LCD_DrawPoint(u16 x,u16 y,u16 color);
-void LCD_DrawLine(u16 x1,u16 y1,u16 x2,u16 y2,u16 color);
-void LCD_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2,u16 color);
-void LCD_DrawCircle(u16 x0, u16 y0, u8 r, u16 color);
-void LCD_ShowChar(u16 x, u16 y, u8 num, u16 fc, u16 bc, u8 sizey, u8 mode);
-void LCD_ShowString(u16 x, u16 y, const u8 *data, u16 fc, u16 bc, u8 sizey, u8 mode);
-u32 mypow(u8 m, u8 n);
-void LCD_ShowIntNum(u16 x, u16 y, u16 num, u8 len, u16 fc, u16 bc, u8 sizey);
-void LCD_ShowFloatNum(u16 x, u16 y, float num, u8 len, u16 fc, u16 bc, u8 sizey);
+void LCD_DrawPoint(uint16_t x,uint16_t y,uint16_t color);
+void LCD_DrawLine(uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t color);
+void LCD_DrawRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,uint16_t color);
+void LCD_DrawCircle(uint16_t x0, uint16_t y0, uint8_t r, uint16_t color);
+void LCD_ShowChar(uint16_t x, uint16_t y, uint8_t num, uint16_t fc, uint16_t bc, uint8_t sizey, uint8_t mode);
+void LCD_ShowString(uint16_t x, uint16_t y, const uint8_t *data, uint16_t fc, uint16_t bc, uint8_t sizey, uint8_t mode);
+uint32_t mypow(uint8_t m, uint8_t n);
+void LCD_ShowIntNum(uint16_t x, uint16_t y, uint16_t num, uint8_t len, uint16_t fc, uint16_t bc, uint8_t sizey);
+void LCD_ShowFloatNum(uint16_t x, uint16_t y, float num, uint8_t len, uint16_t fc, uint16_t bc, uint8_t sizey);
 
 #endif

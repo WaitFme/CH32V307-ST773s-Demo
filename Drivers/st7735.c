@@ -115,20 +115,20 @@ void LCD_Init() {
 	LCD_WriteCMD(0x29); //Display on
 }
 
-void LCD_WriteData(u8 data) {
+void LCD_WriteData(uint8_t data) {
     LCD_CS_WB(0);
     SPI2_Transmit(data);
     LCD_CS_WB(1);
 }
 
-void LCD_WriteData_16Bit(u16 data) {
+void LCD_WriteData_16Bit(uint16_t data) {
 	LCD_CS_WB(0);
 	SPI2_Transmit(data >> 8);
-	SPI2_Transmit((u8) data);
+	SPI2_Transmit((uint8_t) data);
 	LCD_CS_WB(1);
 }
 
-void LCD_WriteCMD(u8 cmd) {
+void LCD_WriteCMD(uint8_t cmd) {
 	LCD_CS_WB(0);
 	LCD_DC_WB(0);
 	SPI2_Transmit(cmd);
@@ -136,7 +136,7 @@ void LCD_WriteCMD(u8 cmd) {
 	LCD_CS_WB(1);
 }
 
-void LCD_Address_Set(u16 x_start,u16 y_start,u16 x_end,u16 y_end) {
+void LCD_Address_Set(uint16_t x_start,uint16_t y_start,uint16_t x_end,uint16_t y_end) {
 	if(USE_HORIZONTAL == 0) {
 		LCD_WriteCMD(0x2a);
 		LCD_WriteData_16Bit(x_start+2);
@@ -172,7 +172,7 @@ void LCD_Address_Set(u16 x_start,u16 y_start,u16 x_end,u16 y_end) {
 	}
 }
 
-void LCD_Fill(u16 x_start, u16 y_start, u16 x_end, u16 y_end, u16 color) {
+void LCD_Fill(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color) {
 	// LCD_Address_Set(x_start, y_start, x_end - 1, y_end - 1);
 	LCD_Address_Set(x_start, y_start, x_end, y_end);
 	for(uint16_t i = y_start; i < y_end; i++) {
@@ -182,9 +182,9 @@ void LCD_Fill(u16 x_start, u16 y_start, u16 x_end, u16 y_end, u16 color) {
 	}
 }
 
-void LCD_Fill_DMA(u16 xsta, u16 ysta, u16 xend, u16 yend, u16 color) {
-	u16 color1[1];
-	u16 num;
+void LCD_Fill_DMA(uint16_t xsta, uint16_t ysta, uint16_t xend, uint16_t yend, uint16_t color) {
+	uint16_t color1[1];
+	uint16_t num;
 	color1[0] = color;
 	num = (xend - xsta) * (yend - ysta);
 	LCD_Address_Set(xsta, ysta, xend - 1, yend - 1);
@@ -219,12 +219,12 @@ void LCD_Clear(uint16_t color) {
 	LCD_Fill_DMA(0, 0, LCD_W, LCD_H, color);
 }
 
-void LCD_DrawPoint(u16 x,u16 y,u16 color) {
+void LCD_DrawPoint(uint16_t x,uint16_t y,uint16_t color) {
 	LCD_Address_Set(x, y, x, y);
 	LCD_WriteData_16Bit(color);
 }
 
-void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color) {
+void LCD_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) {
 	int xerr = 0, yerr = 0, delta_x, delta_y, distance;
 	int incx, incy, uRow, uCol;
 
@@ -264,9 +264,9 @@ void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color) {
 		distance = delta_y;
 	}
 
-	for(u16 t = 0; t < distance + 1; t++) {
+	for(uint16_t t = 0; t < distance + 1; t++) {
 		// 画点
-		LCD_DrawPoint((u16)uRow, (u16)uCol, color);
+		LCD_DrawPoint((uint16_t)uRow, (uint16_t)uCol, color);
 
 		xerr += delta_x;
 		yerr += delta_y;
@@ -283,16 +283,16 @@ void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color) {
 	}
 }
 
-void LCD_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2, u16 color) {
+void LCD_DrawRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) {
 	LCD_DrawLine(x1, y1, x2, y1, color);
 	LCD_DrawLine(x1, y1, x1, y2, color);
 	LCD_DrawLine(x1, y2, x2, y2, color);
 	LCD_DrawLine(x2, y1, x2, y2, color);
 }
 
-void LCD_DrawCircle(u16 x0, u16 y0, u8 r, u16 color) {
+void LCD_DrawCircle(uint16_t x0, uint16_t y0, uint8_t r, uint16_t color) {
 	//int a = 0, b = r;
-	u16 a = 0, b = r;
+	uint16_t a = 0, b = r;
 
 	while(a <= b) {
 		LCD_DrawPoint(x0 - b, y0 - a, color);
@@ -312,17 +312,17 @@ void LCD_DrawCircle(u16 x0, u16 y0, u8 r, u16 color) {
 	}
 }
 
-void LCD_ShowChar(u16 x, u16 y, u8 num, u16 fc, u16 bc, u8 sizey, u8 mode) {
-	u8 temp, sizex, m = 0;
-	u16 TypefaceNum;
-	u16 x0 = x;
+void LCD_ShowChar(uint16_t x, uint16_t y, uint8_t num, uint16_t fc, uint16_t bc, uint8_t sizey, uint8_t mode) {
+	uint8_t temp, sizex, m = 0;
+	uint16_t TypefaceNum;
+	uint16_t x0 = x;
 	sizex = sizey / 2;
 	TypefaceNum = (sizex / 8 + ((sizex % 8) ? 1 : 0)) * sizey;
 	num = num - ' ';
 
 	LCD_Address_Set(x, y, x + sizex - 1, y+sizey - 1);
 
-	for (u16 i = 0; i < TypefaceNum; i++) {
+	for (uint16_t i = 0; i < TypefaceNum; i++) {
 		if (sizey == 12) {
 			temp = ascii_1206[num][i];
 		} else if (sizey == 16) {
@@ -335,7 +335,7 @@ void LCD_ShowChar(u16 x, u16 y, u8 num, u16 fc, u16 bc, u8 sizey, u8 mode) {
 			return;
 		}
 
-		for (u16 t = 0; t < 8; t++) {
+		for (uint16_t t = 0; t < 8; t++) {
 			if (!mode) {
 				if (temp & (0x01 << t)) {
 					LCD_WriteData_16Bit(fc);
@@ -366,7 +366,7 @@ void LCD_ShowChar(u16 x, u16 y, u8 num, u16 fc, u16 bc, u8 sizey, u8 mode) {
 	}
 }
 
-void LCD_ShowString(u16 x, u16 y, const u8 *data, u16 fc, u16 bc, u8 sizey, u8 mode) {
+void LCD_ShowString(uint16_t x, uint16_t y, const uint8_t *data, uint16_t fc, uint16_t bc, uint8_t sizey, uint8_t mode) {
 	while(*data != '\0') {
 		LCD_ShowChar(x, y, *data, fc, bc, sizey, mode);
 		x += sizey / 2;
@@ -374,8 +374,8 @@ void LCD_ShowString(u16 x, u16 y, const u8 *data, u16 fc, u16 bc, u8 sizey, u8 m
 	}
 }
 
-u32 mypow(u8 m, u8 n) {
-	u32 result = 1;
+uint32_t mypow(uint8_t m, uint8_t n) {
+	uint32_t result = 1;
 
 	while(n--) {
 		result *= m;
@@ -384,10 +384,10 @@ u32 mypow(u8 m, u8 n) {
 	return result;
 }
 
-void LCD_ShowIntNum(u16 x, u16 y, u16 num, u8 len, u16 fc, u16 bc, u8 sizey) {
-	u8 t, temp;
-	u8 enshow = 0;
-	u8 sizex = sizey / 2;
+void LCD_ShowIntNum(uint16_t x, uint16_t y, uint16_t num, uint8_t len, uint16_t fc, uint16_t bc, uint8_t sizey) {
+	uint8_t t, temp;
+	uint8_t enshow = 0;
+	uint8_t sizex = sizey / 2;
 	for (t = 0; t < len; t++) {
 		temp = (num / mypow(10, len - t - 1)) % 10;
 		if (enshow == 0 && t < (len - 1)) {
@@ -402,9 +402,9 @@ void LCD_ShowIntNum(u16 x, u16 y, u16 num, u8 len, u16 fc, u16 bc, u8 sizey) {
 	}
 }
 
-void LCD_ShowFloatNum(u16 x, u16 y, float num, u8 len, u16 fc, u16 bc, u8 sizey) {
-	u8 t, temp, sizex;
-	u16 num1;
+void LCD_ShowFloatNum(uint16_t x, uint16_t y, float num, uint8_t len, uint16_t fc, uint16_t bc, uint8_t sizey) {
+	uint8_t t, temp, sizex;
+	uint16_t num1;
 	sizex = sizey / 2;
 	num1 = num * 100;
 	for(t=0;t<len;t++) {

@@ -1,6 +1,5 @@
 #include "main.h"
 #include "usart.h"
-#include "i2c.h"
 #include "ch32v30x_rng.h"
 #include "rng.h"
 #include "spi.h"
@@ -15,8 +14,6 @@ void initial() {
 
     vPrintf("Initial Start\r\n");
 
-    I2C1_Init(4000000);
-
     SPI2_Init();
 
     RNG_Init();
@@ -29,7 +26,7 @@ void initial() {
 int main() {
     initial();
 
-    LCD_Clear(BLACK);
+    // LCD_Clear(BLACK);
 
     while (true) {
         vPrintf("randomNumber: %d\r\n", RNG_RangeRandomNumber(0, 100));
